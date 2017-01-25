@@ -1,0 +1,67 @@
+#! /usr/bin/env bash
+
+NORMAL="\033[0m"
+BOLD="\033[1m"
+YELLOW="\033[33m"
+
+if [[ $# -eq 1 ]]; then
+  exit_status=1
+  echo "Usage:"
+  echo -e "\t$BOLD$YELLOW ./run$NORMAL"
+  if [[ $1 == "-h" || $1 == "--help" ]]; then
+    exit_status=0
+  fi
+  exit $exit_status
+fi
+
+echo -e "\033[4mChecking requirements:$NORMAL"
+
+echo -e "Checking:$NORMAL$BOLD$YELLOW ruby$NORMAL"
+bash -c "ruby -v > /dev/null 2>&1"
+if [[ $? != 0 ]]; then
+  echo "Ruby is required for this project to run."
+  echo "For installation instructions, go to: https://www.ruby-lang.org"
+  echo "Exiting!"
+  exit 1
+else
+  echo "OK"
+fi
+
+echo
+
+echo -e "Checking:$NORMAL$BOLD$YELLOW bundler$NORMAL"
+bash -c "bundle -v > /dev/null 2>&1"
+if [[ $? != 0 ]]; then
+  printf "Bundler not installed. Want to install it? (Y/n): "
+  read install_bundler
+  if [[ $install_bundler == "n" || $install_bundler == "N" ]]; then
+    echo "Bundler is required for this project to run. Exiting!"
+    exit 1
+  else
+    gem install bundler
+  fi
+else
+  echo "OK"
+fi
+
+echo
+
+if [[ -e Gemfile.lock ]]; then
+  echo "Dependencies already installed. Skipping"
+else
+  echo -e "\033[4mInstalling dependencies:$NORMAL"
+  echo -e "Command:$NORMAL$BOLD$YELLOW bundle install$NORMAL"
+  echo
+  bundle install
+fi
+
+echo
+
+echo -e "\033[4mRunning Script:$NORMAL"
+echo -e "Command:$NORMAL$BOLD$YELLOW bundle exec ruby script.rb$NORMAL"
+echo
+bundle exec ruby script.rb
+
+echo
+
+echo -e "\033[1mCheck out$YELLOW script.rb$NORMAL$BOLD to tweak this further and get started!$NORMAL"
