@@ -1,14 +1,28 @@
 # Ruby Simple Boilerplate
 
-> This is an automatically generated file.
+> To add your credentials, replace the values for `SPACE_ID` and `ACCESS_TOKEN` in _script.rb_.
 
-## Install & Run
+## On macOS & Linux
+
+### Install & Run
 
 ```bash
 ./run
 ```
 
-> To add your credentials, replace the values for `SPACE_ID` and `ACCESS_TOKEN` in _script.rb_.
+## On Windows
+
+### Requirements
+
+* Ruby 1.9+ (https://rubyinstaller.org/)
+* Bundler (https://bundler.io/)
+
+### Install & Run
+
+```
+bundle install
+ruby script.rb
+```
 
 ## Want to learn more?
 
